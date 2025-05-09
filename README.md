@@ -1,6 +1,8 @@
 # Déploiement de l'application Rgonomie
 
-Ce dépot permet le déploiement l'application [Rgonomie](https://github.com/SSM-Agriculture/Rgonomie) sur un cluster Kubernetes. La configuration présentée est spécifiquement adaptée au [SSP Cloud](https://datalab.sspcloud.fr/home).
+Ce dépot permet le déploiement l'application [Rgonomie](https://github.com/SSM-Agriculture/Rgonomie) sur un cluster Kubernetes. La configuration présentée est spécifiquement adaptée au [SSP Cloud](https://datalab.sspcloud.fr/home).   
+
+Le tutoriel suivi pour le déploiement de l'application est disponible [ici](https://github.com/InseeFrLab/sspcloud-tutorials/blob/main/deployment/shiny-app.md).
 
 #### Chart Helm
 
