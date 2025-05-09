@@ -6,5 +6,18 @@ shiny: # Section principale de configuration spécifique à l'application Shiny
   ingress: # Configuration pour exposer l'application via un Ingress (accès externe HTTP/HTTPS)
     enabled: true # Active l'Ingress pour rendre l'app accessible depuis l'extérieur
     hostname: rgonomie.lab.sspcloud.fr # Nom de domaine utilisé pour accéder à l'app une fois déployée
+  probe: # Configuration des sondes de santé pour vérifier l'état du conteneur
+    enabled: true # Active les sondes Kubernetes (liveness, readiness, startup)
+    probeValue:
+        livenessProbe: # Vérifie si l'application est vivante (redémarre si plantée)
+          timeoutSeconds: 60 # Délai maximum avant de considérer que la sonde échoue
+        readinessProbe: # Vérifie si l'application est prête à recevoir du trafic
+          timeoutSeconds: 60 # Délai avant de déclarer que l’app n’est pas prête
+        startupProbe: # Sonde utilisée uniquement au démarrage (évite erreurs prématurées)
+          timeoutSeconds: 60 # Délai avant d’abandonner une tentative
+          periodSeconds: 100 # Fréquence entre deux tests (toutes les 100 secondes)
+  resources: # Configuration des ressources demandées/limitées pour le conteneur
+    requests:
+      cpu: "0.5" # Réserve 0.5 unité de CPU à l'application (garanti par Kubernetes)
   s3: # Configuration de l’accès à un bucket S3
     enabled: false # Désactive l’utilisation de S3 dans cette configuration
