@@ -18,6 +18,6 @@ shiny: # Section principale de configuration spécifique à l'application Shiny
           periodSeconds: 100 # Fréquence entre deux tests (toutes les 100 secondes)
   resources: # Configuration des ressources demandées/limitées pour le conteneur
     requests:
-      cpu: "0.5" # Réserve 0.5 unité de CPU à l'application (garanti par Kubernetes)
+      cpu: "2" # Réserve 2 unités de CPU à l'application (garanti par Kubernetes)
   s3: # Configuration de l’accès à un bucket S3
     enabled: false # Désactive l’utilisation de S3 dans cette configuration
