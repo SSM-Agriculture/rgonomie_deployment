@@ -10,14 +10,39 @@ shiny: # Section principale de configuration spécifique à l'application Shiny
     enabled: true # Active les sondes Kubernetes (liveness, readiness, startup)
     probeValue:
         livenessProbe: # Vérifie si l'application est vivante (redémarre si plantée)
-          timeoutSeconds: 60 # Délai maximum avant de considérer que la sonde échoue
+          httpGet:
+            path: / # Vérifie l'accessibilité de l'application via HTTP
+            port: 3838 # Port d'écoute de Shiny
+          initialDelaySeconds: 60 # Temps d'attente avant de commencer à vérifier
+          timeoutSeconds: 30 # Délai pour la réponse avant de déclarer que la sonde a échoué
+          periodSeconds: 10 # Fréquence de vérification (toutes les 10 secondes)
+          failureThreshold: 3 # Nombre de tentatives échouées avant de considérer l'application comme morte
+
         readinessProbe: # Vérifie si l'application est prête à recevoir du trafic
-          timeoutSeconds: 60 # Délai avant de déclarer que l’app n’est pas prête
+          httpGet:
+            path: / # Vérifie l'accessibilité de l'application via HTTP
+            port: 3838 # Port d'écoute de Shiny
+          initialDelaySeconds: 60 # Temps d'attente avant de commencer à vérifier
+          timeoutSeconds: 30 # Délai pour la réponse avant de déclarer que la sonde a échoué
+          periodSeconds: 10 # Fréquence de vérification (toutes les 10 secondes)
+          failureThreshold: 3 # Nombre de tentatives échouées avant de déclarer que l'application n'est pas prête
+
         startupProbe: # Sonde utilisée uniquement au démarrage (évite erreurs prématurées)
-          timeoutSeconds: 60 # Délai avant d’abandonner une tentative
-          periodSeconds: 100 # Fréquence entre deux tests (toutes les 100 secondes)
+          httpGet:
+            path: / # Vérifie l'accessibilité de l'application via HTTP
+            port: 3838 # Port d'écoute de Shiny
+          initialDelaySeconds: 60 # Temps d'attente avant de commencer à vérifier (temps pour que l'app démarre)
+          timeoutSeconds: 30 # Délai pour la réponse avant de déclarer que la sonde a échoué
+          periodSeconds: 15 # Fréquence de vérification (toutes les 15 secondes)
+          failureThreshold: 5 # Nombre de tentatives échouées avant de considérer que l'application ne démarre pas correctement
+
   resources: # Configuration des ressources demandées/limitées pour le conteneur
     requests:
       cpu: "2" # Réserve 2 unités de CPU à l'application (garanti par Kubernetes)
+      memory: "2Gi" # Alloue de la mémoire supplémentaire pour l'application
+    limits:
+      cpu: "4" # Limite à 4 unités de CPU (évite que l'app consomme trop de ressources)
+      memory: "4Gi" # Limite la mémoire à 4 Go pour éviter une consommation excessive
+
   s3: # Configuration de l’accès à un bucket S3
     enabled: false # Désactive l’utilisation de S3 dans cette configuration
