@@ -1,0 +1,8 @@
+apiVersion: v2                # Version de l'API Helm utilisée ; v2 est requis pour Helm 3+
+name: shiny-app-template      # Nom du chart Helm ; utilisé pour l'identification et l'installation
+version: 1.0.0                # Version du chart Helm lui-même (pas de l'application)
+
+dependencies:                 # Liste des dépendances : d'autres charts utilisés comme sous-charts
+  - name: shiny               # Nom du chart dépendant, ici "shiny", un chart Helm dédié aux apps Shiny
+    version: 0.19.0           # Version spécifique du chart "shiny" à utiliser
+    repository: https://inseefrlab.github.io/helm-charts  # URL du dépôt Helm où trouver le chart "shiny"
