@@ -1,7 +1,7 @@
 shiny: # Section principale de configuration spécifique à l'application Shiny
   image: # Paramètres liés à l'image Docker utilisée pour l'application
-    repository: SSM-Agriculture/Rgonomie # L'URL du registre Docker où se trouve l'image de l'app Shiny à déployer
-    tag: "1.0.0" # Version (tag) de l'image Docker à utiliser
+    repository: ssmagr/rgonomie # L'URL du registre Docker où se trouve l'image de l'app Shiny à déployer
+    tag: "latest" # Version (tag) de l'image Docker à utiliser
     pullPolicy: Always # Politique de récupération de l'image : "Always" force Kubernetes à tirer l'image à chaque déploiement
   ingress: # Configuration pour exposer l'application via un Ingress (accès externe HTTP/HTTPS)
     enabled: true # Active l'Ingress pour rendre l'app accessible depuis l'extérieur
